@@ -1,0 +1,60 @@
+@startuml
+
+actor User as "User"
+
+participant "User Interface" as UI
+participant "Backend Server" as BS
+participant "Text Processing" as TP
+participant "Ranking" as R
+participant "Result Display" as RD
+
+User -> UI: Upload Resumes and Job Description
+activate UI
+UI -> BS: Receive Uploads
+activate BS
+BS -> TP: Extract Text from Resumes
+activate TP
+TP -> TP: Preprocess Resume Text
+TP -> TP: Analyze Resume Features
+TP -> BS: Preprocessed Resume Text, Analyzed Features
+deactivate TP
+BS -> TP: Extract Text from Job Description
+activate TP
+TP -> TP: Preprocess Job Description Text
+TP -> TP: Identify Keywords and Requirements
+TP -> BS: Preprocessed Job Description Text, Identified Keywords
+deactivate TP
+BS -> R: Calculate Similarity
+activate R
+R -> R: Rank Candidates
+R -> BS: Ranked Candidates
+deactivate R
+BS -> RD: Display Ranked Candidates
+activate RD
+RD -> User: Display Results
+deactivate RD
+deactivate BS
+deactivate UI
+
+skinparam participant {
+    BackgroundColor DarkSeaGreen
+    BorderColor Black
+}
+
+skinparam actor {
+    BackgroundColor LightBlue
+    BorderColor Black
+}
+
+skinparam note {
+    BackgroundColor LightYellow
+    BorderColor Black
+}
+
+skinparam sequence {
+    ArrowColor DarkGreen
+    ActorBorderColor Black
+    LifeLineBorderColor Black
+}
+
+@enduml

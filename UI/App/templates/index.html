@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch - 4</title>
+    <style>
+        body {
+            background-color: #F3FFDA;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+            margin: 0;
+            padding: 0;
+            flex-direction: column;
+        }
+        .header {
+            text-align: center;
+            top: 5px; /* Align to the top */
+            padding: 10px 0;
+        }
+        .c1 {
+            background-color: #BAF1B9;
+            border-radius: 25px;
+            padding: 15px;
+            max-width: 100%; /* Limit the width */
+            line-height: 1.5;
+            height: 15vh;
+            width: 140vh; 
+        }
+        .main {
+            margin-top: 80px; /* Adjust margin to create space between header and main content */
+        }
+        .upload {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px; /* Limit the width of the upload container */
+            text-align: center;
+        }
+        .upload label {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .upload input[type="file"] {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+        .upload button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .upload button:hover {
+            background-color: #45a049;
+        }
+        .note {
+            font-size: 14px;
+            color: #666;
+            display: block;
+            margin-top: 10px;
+        }
+        .result {
+            margin-top: 80px; 
+            max-width: 100%; 
+        }
+        .result .board {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            text-align: center;
+        }
+        .result table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .result th, .result td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .result tr{
+            background-color: #fff;
+        }
+        .result th {
+            background-color: #BAF1B9;
+            font-weight: bold;
+        }
+        .result th:nth-child(2), .result td:nth-child(2) {
+            text-align: left;
+            width: 20%;
+        }
+        .result tr:hover {
+            background-color: #ddd;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #BAF1B9;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s ease;
+        }
+        ::-webkit-scrollbar-thumb:hover{
+            background-color: #45a049;
+        }
+        ::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <section class="header">
+        <div class="c1">
+            <span style="font-size:40px; font-weight: bolder;">Resume Analysis & Candidate Ranking System</span><br>
+            <span style="font-size: 25px; font-weight: lighter;">IV-II Major Project (2024 Batch)</span>
+        </div>
+    </section>
+    <section class="main">
+        <div class="upload">
+            <form action="/analyze" method="post" enctype="multipart/form-data">
+                <label for="resumeZip">Upload Resumes</label><br>
+                <span class="note">Please upload resumes in ZIP format only.</span>
+                <input type="file" id="resumeZip" name="resumeZip" accept=".zip" required>
+                <span class="note">Please upload job description in PDF format only.</span>
+                <input type="file" id="jd" name="jd" accept=".pdf" required>
+                <button type="submit">Analyze Resumes</button>
+            </form>
+        </div>
+    </section>
+    <section class="result" style="display: none;">
+        <span class="board">Leaderboard</span>
+        <table id="leaderboard_table">
+            <thead>
+                <th>Resume Name</th>
+                <th>Score</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+    <script>
+        $(document).ready(function(){
+            // Function to update leaderboard table
+            function updateLeaderboardTable(data) {
+                var tbody = $("#leaderboard_table tbody");
+                tbody.empty();
+                $.each(data, function(index, item) {
+                    var row = `<tr>
+                        <td>${item[0]}</td>
+                        <td>${item[1]}</td>
+                    </tr>`;
+                    tbody.append(row); 
+                });
+                $(".result").show(); // Show the result section
+                $('html, body').animate({ // Scroll to the result section
+                    scrollTop: $(".result").offset().top
+                }, 1000);
+            }
+
+            // Handle form submission
+            $("form").submit(function(event){
+                event.preventDefault(); // Prevent default form submission
+                var formData = new FormData($(this)[0]); // Create form data object
+                $.ajax({
+                    url: '/analyze', // Endpoint to send the form data
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        updateLeaderboardTable(data); // Update leaderboard table with returned data
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error:", error); // Log any errors
+                    }
+                });
+            });
+        });
+        window.addEventListener('scroll', function() {
+            var header = document.querySelector('.header');
+            var main = document.querySelector('.main');
+            var distance = window.scrollY;
+            if (distance > 0) {
+                header.style.position = 'static';
+                main.style.marginTop = '20px'; 
+            } else {
+                header.style.position = 'fixed';
+                main.style.marginTop = '185px';
+            }
+        });
+    </script>
+</body>
+</html>

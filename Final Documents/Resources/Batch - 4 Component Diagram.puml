@@ -1,0 +1,33 @@
+@startuml
+
+package UserInterface {
+  [User Interface]
+}
+
+package BackendServer {
+  [Backend Server]
+}
+
+package TextProcessing {
+  [Text Processing]
+}
+
+package Ranking {
+  [ranking]
+}
+
+package ResultDisplay {
+  [Result Display]
+}
+
+[User Interface] --> [Backend Server] : Upload Resumes and Job Description
+[Backend Server] --> [Text Processing] : Extract Text
+[Text Processing] --> [Text Processing] : Preprocess Text
+[Text Processing] --> [ranking] : Analyze Features
+[ranking] --> [ranking] : Rank Candidates
+[ranking] --> [Result Display] : Display Results
+
+@enduml
+
+
+

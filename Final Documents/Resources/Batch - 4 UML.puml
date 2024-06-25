@@ -1,0 +1,39 @@
+@startuml
+
+class UserInterface {
+    + uploadResumesAndJobDescription()
+    + displayRankedCandidates()
+}
+
+class BackendServer {
+    + receiveUploads()
+    + extractTextFromResumes()
+    + preprocessResumeText()
+    + analyzeResumeFeatures()
+    + extractTextFromJobDescription()
+    + preprocessJobDescriptionText()
+    + identifyKeywordsAndRequirements()
+    + calculateSimilarity()
+    + rankCandidates()
+}
+
+class TextProcessing {
+    + preprocessText()
+    + analyzeText()
+}
+
+class Ranking {
+    + calculateSimilarity()
+    + rankCandidates()
+}
+
+class ResultDisplay {
+    + displayResults()
+}
+
+UserInterface --> BackendServer : uses
+BackendServer --> TextProcessing : uses
+BackendServer --> Ranking : uses
+BackendServer --> ResultDisplay : uses
+
+@enduml

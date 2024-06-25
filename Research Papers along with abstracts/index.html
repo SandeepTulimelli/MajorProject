@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch-4</title>
+    <style> 
+        div { 
+            margin: 40px; 
+        }
+        
+    </style>
+    <script>
+        function check1(){
+            var a=document.getElementById("idea").value;
+            var abs_path;
+            var pap_path;
+            if(a==1){
+                abs_path = '\\AI-Enabled Medical Image Analysis for Enhanced Disease Detection and Diagnosis\\AI-Enabled Medical Image Analysis for Enhanced Disease Detection and Diagnosis.pdf'; 
+                pap_path = '\\AI-Enabled Medical Image Analysis for Enhanced Disease Detection and Diagnosis\\Deep Learning in Medical Image Analysis.pdf'; 
+            }
+            else if(a==2){
+                abs_path = '\\AI-Powered Resume Analysis and Candidate Ranking System\\AI-Powered Resume Analysis and Candidate Ranking System (Abstract).pdf';
+                pap_path = '\\AI-Powered Resume Analysis and Candidate Ranking System\\Resume Evaluation.pdf';
+
+            }
+            else if(a==3){
+                abs_path = '\\Brain MRI Segmentation for Neurological Disorder Diagnosis\\Brain MRI Segmentation for Neurological Disorder Diagnosis (Abstract).pdf'
+                pap_path = '\\Brain MRI Segmentation for Neurological Disorder Diagnosis\\Deep Learning for Brain MRI Segmentation State of the Art.pdf'
+            }
+            else if(a==4){
+                abs_path = '\\Customer sentiment analysis for product improvement\\Customer sentiment analysis for product improvement.pdf'
+                pap_path = '\\Customer sentiment analysis for product improvement\\Sentiment analysis using product review data.pdf'
+            }
+            else if(a==5){
+                abs_path = '\\Image Captioning\\Image Captioning.pdf'
+                pap_path = '\\Image Captioning\\Show and Tell A Neural Image Caption Generator.pdf'
+            }
+            
+            var abstractIframeHTML = "<h3>Abstract</h3><iframe src='"+ abs_path +"' width='50%' height='600px'></iframe>";
+            var paperIframeHTML = "<h3>Paper</h3><iframe src='"+ pap_path +"' width='50%' height='600px'></iframe>";
+
+            document.getElementById("abstract").innerHTML = abstractIframeHTML
+            document.getElementById("paper").innerHTML = paperIframeHTML
+        }
+    </script>
+</head>
+<body>
+    <h2 align="center">Batch-4 Major Project Abstracts along with Research Papers</h2>
+    <div align="center" class="title">
+        Select the Title: <select name="idea" id="idea" onchange=check1()>
+            <option value=0>select one</option>
+            <option value=1>AI-Enabled Medical Image Analysis for Enhanced Disease Detection and Diagnosis</option>
+            <option value=2>AI-Powered Resume Analysis and Candidate Ranking System</option>
+            <option value=3>Brain MRI Segmentation for Neurological Disorder Diagnosis</option>
+            <option value=4>Customer Sentiment Analysis for Product Improvement</option>
+            <option value=5>Image Captioning</option>
+        </select>
+    </div>
+    <div align="center" class="abstract" id="abstract"></div>
+    <div align="center" class="paper" id="paper"></div>
+</body>
+</html>

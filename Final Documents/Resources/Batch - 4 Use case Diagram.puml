@@ -1,0 +1,33 @@
+@startuml
+
+actor User as "User"
+
+rectangle System {
+    usecase "Upload Resumes and Job Description" as U1
+    usecase "Receive Uploads" as U2
+    usecase "Extract Text from Resumes" as U3
+    usecase "Preprocess Resume Text" as U4
+    usecase "Analyze Resume Features" as U5
+    usecase "Extract Text from Job Description" as U6
+    usecase "Preprocess Job Description Text" as U7
+    usecase "Identify Keywords and Requirements" as U8
+    usecase "Calculate Similarity" as U9
+    usecase "Rank Candidates" as U10
+    usecase "Display Ranked Candidates" as U11
+
+    User --> U1 : Uploads Resumes and Job Description
+    U1 --> U2 : Trigger
+    U2 --> U3 : Process
+    U3 --> U4 : Process
+    U4 --> U5 : Process
+    U2 --> U6 : Process
+    U6 --> U7 : Process
+    U7 --> U8 : Process
+    U5 --> U9 : Process
+    U8 --> U9 : Process
+    U9 --> U10 : Process
+    U10 --> U11 : Process
+    User --> U11 : Views Ranked Candidates
+}
+
+@enduml

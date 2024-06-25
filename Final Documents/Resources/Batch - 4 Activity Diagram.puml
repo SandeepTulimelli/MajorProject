@@ -1,0 +1,19 @@
+@startuml
+
+:Start;
+
+:Upload Resumes and Job Description;
+if (Receive Uploads) then (yes)
+  :Extract Text from Resumes;
+  :Preprocess Resume Text;
+  :Analyze Resume Features;
+    :Calculate Similarity;
+    :Rank Candidates;
+    :Display Ranked Candidates;
+else (no)
+  :Display "Upload Failed" message;
+endif
+
+:End;
+
+@enduml

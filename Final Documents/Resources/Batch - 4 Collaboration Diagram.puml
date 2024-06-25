@@ -1,0 +1,25 @@
+@startuml
+
+skinparam component {
+    BackgroundColor Yellow
+    BorderColor Black
+}
+
+actor User
+participant "Frontend" as Frontend
+participant "Backend Server" as Backend
+database "Resumes Database" as ResumesDB
+database "Job Description Database" as JDDatabase
+
+User -> Frontend: Upload Resumes and Job Description
+Frontend -> Backend: Send Uploads
+Backend -> ResumesDB: Extract Text from Resumes
+Backend -> JDDatabase: Extract Text from Job Description
+Backend -> Backend: Preprocess Resume Text
+Backend -> Backend: Preprocess Job Description Text
+Backend -> Backend: Analyze Resume Features
+Backend -> Backend: Identify Important Keywords and Requirements
+Backend -> Backend: Calculate Similarity between Resumes and Job Description
+Backend -> Frontend: Display Ranked Candidates
+
+@enduml
